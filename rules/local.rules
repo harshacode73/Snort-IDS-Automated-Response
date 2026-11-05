@@ -1,0 +1,5 @@
+alert icmp 192.168.56.101 any -> 192.168.56.1 any (msg:"ICMP Ping Detected from Kali"; sid:1000001; rev:1;)
+alert tcp any any -> 192.168.56.1 any (flags:S; msg:"Possible Nmap SYN Port Scan"; detection_filter:track by_src, count 10, seconds 5; sid:1000002; rev:1;)
+alert tcp any any -> 192.168.56.1 22 (flags:S; msg:"SSH Connection Attempt Detected"; sid:1000003; rev:1;)
+alert tcp any any -> 192.168.56.1 8000 (msg:"HTTP Admin Page Access Attempt"; flow:to_server,established; content:"/admin"; http_uri; sid:1000004; rev:1;)
+alert tcp 192.168.56.101 any -> 192.168.56.1 any (flags:S; msg:"Possible TCP SYN Flood / DoS Activity"; detection_filter:track by_src, count 20, seconds 10; sid:1000005; rev:1;)
